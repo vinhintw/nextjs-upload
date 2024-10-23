@@ -19,7 +19,9 @@ export function FileUpload({
   const [isLoading, setIsLoading] = useState(false);
   const [fileUrl, setFileUrl] = useState<string | null>(null);
   async function getPresignedUrl(file: FileProps) {
+    console.log("Start getPresignedUrl");
     const response = await fetch(`/api/files/download/presignedUrl/${file}`);
+    console.log("response", response.json());
     return (await response.json()) as string;
   }
   const uploadToServer = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -47,7 +49,7 @@ export function FileUpload({
       return;
     }
     setIsLoading(true);
-
+    console.log("Start getPresignedUrls");
     const presignedUrls = await getPresignedUrls(filesInfo);
     console.log("presignedUrls", presignedUrls);
     if (!presignedUrls?.length) {
@@ -56,6 +58,7 @@ export function FileUpload({
     }
 
     // upload files to s3 endpoint directly and save file info to db
+    console.log("Start handleUpload");
     const res = await handleUpload(files, presignedUrls, onUploadSuccess);
     const presignedUrl = await getPresignedUrl(res);
     console.log("presignedUrl", presignedUrl);

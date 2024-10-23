@@ -9,7 +9,6 @@ export const s3Client = new Minio.Client({
   secretKey: env.S3_SECRET_KEY,
   useSSL: process.env.S3_USE_SSL === "true",
 });
-console.log("s3Client", s3Client);
 
 export async function createBucketIfNotExists(bucketName: string) {
   const bucketExists = await s3Client.bucketExists(bucketName);
