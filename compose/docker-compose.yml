@@ -12,5 +12,7 @@ services:
       - 3000:3000
     environment:
       - ../.env
+    volumes:
+      - ../:/app
     command: sh ./compose/db-push-and-start.sh
   
