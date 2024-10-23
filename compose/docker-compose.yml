@@ -2,9 +2,15 @@ version: "3.9"
 name: nextjs-upload
 services:
   web:
-    image: vinhintw2014/nextjs-upload:latest
-    container_name: nextjs-upload
+    container_name: nextjs
+    build:
+      context: ../
+      dockerfile: compose/web.Dockerfile
+      args:
+        NEXT_PUBLIC_CLIENTVAR: "clientvar"
     ports:
-      - 18001:3000
-    env_file:
-      - .env
+      - 3000:3000
+    environment:
+      - ../.env
+    command: sh ./compose/db-push-and-start.sh
+  
